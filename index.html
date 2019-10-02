@@ -40,7 +40,7 @@
           if (!cred) {
             return show('No credentials in store.')
           }
-        
+          console.log(cred)
           show(`You are now logged in as ${cred.id}.`)
           show(`Your public key: ${cred.publicKey}`)
         }
