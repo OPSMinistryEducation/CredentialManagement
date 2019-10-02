@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Credential Mangager Test</title>
-		<script src="script.js"></script>
-	</head>
-	<body>
-		<div id="welcome-text">Welcome.</div>
 
-		<h1>Register</h1>
-		<form id="login-form" action="#" onsubmit="event.preventDefault(); register()" >
-			Email:<br>
-			<input type="text" id="email" name="email">
-			<br>
-			Password:<br>
-			<input type="password" id="password" name="password">
-			<br><br>
-			<input type="submit" value="Sign up">
-		</form>
+<head>
+    <meta charset="UTF-8">
+    <title>Credential Mangager Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.1/nacl.min.js"></script>
+    <script src="script.js"></script>
+</head>
 
-		<h1>Login</h1>
-		<button onclick="login()">Login</button>
+<body>
+    <div id="welcome-text">Welcome.</div>
 
-		<h1>Logout</h1>
-		<button onclick="logout()">Logout</button>
-	</body>
+    <h1>Register</h1>
+    <form id="login-form" action="#" onsubmit="event.preventDefault(); register()">
+        Email:<br>
+        <input type="text" id="email" name="email">
+        <br>
+        Password:<br>
+        <input type="password" id="password" name="password">
+        <br><br>
+        <input type="submit" value="Sign up">
+    </form>
+
+    <h1>Login</h1>
+    <button onclick="login()">Login</button>
+
+    <h1>Logout</h1>
+    <button onclick="logout()">Logout</button>
+</body>
+
 </html>
