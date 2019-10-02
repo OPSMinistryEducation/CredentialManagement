@@ -24,6 +24,7 @@ const register = async () => {
   await navigator.credentials.store(cred)
   show(`Credentials stored for ${user.email}`)
   show(`User's generated public key ${user.publicKey}`)
+  console.log(user.publicKey)
 }
 
 
