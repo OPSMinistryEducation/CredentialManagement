@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
   <title>Credential Mangager Test</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.1/nacl.min.js"></script>
-  <script src="nacl.min.js"></script>
-  <script src="nacl-util.min.js"></script>
+  <script src="https://www.jsdelivr.com/package/npm/tweetnacl-util"></script>
   <script>
     // import { sign } from "tweetnacl";
     // import { decodeUTF8, encodeUTF8 } from "tweetnacl-util";
@@ -15,20 +14,15 @@
     // local credentials store.
     const register = async () => {
       const keys = generateKeys()
-      const user = {
-        publicKey: keys.publicKey,
-        privateKey: keys.privateKey,
-      }
-
       // Persist access information in the local credentials store
       const cred = new PasswordCredential({
-        id: nacl.util.encodeUTF8(user.publicKey),
-        password: nacl.util.encodeUTF8(user.privateKey),
+        id: keys.publicKey,
+        password: nacl.util.encodeUTF8(keys.secretKey)
       })
 
       await navigator.credentials.store(cred)
-      show(`Credentials stored for public key: ${user.publicKey}`)
-      console.log(user.publicKey)
+      show(`New public key credential generated: ${cred.id}`)
+      console.log(cred.id)
     }
 
 
