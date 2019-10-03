@@ -17,7 +17,7 @@
       // Persist access information in the local credentials store
       const cred = new PasswordCredential({
         id: keys.publicKey,
-        password: nacl.util.encodeUTF8(keys.secretKey)
+        password: keys.secretKey
       })
 
       await navigator.credentials.store(cred)
