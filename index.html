@@ -33,7 +33,7 @@
       }
       console.log(cred)
       show(`You are now logged in as ${cred.id}.`)
-      show(`Your public key: ${cred.publicKey}`)
+
     }
 
 
@@ -67,16 +67,14 @@
 
   <form id="login-form" action="#" onsubmit="event.preventDefault(); login()">
     Email:<br>
-    <input type="text" id="email" name="email">
+    <input type="text" id="email" name="public key">
     <br>
     Password:<br>
-    <input type="password" id="password" name="password">
+    <input type="password" id="password" name="private key">
     <br><br>
     <input type="submit" value="Log in">
   </form>
 
-  <h1>Logout</h1>
-  <button onclick="logout()">Logout</button>
 </body>
 
 </html>
