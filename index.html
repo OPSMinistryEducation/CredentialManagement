@@ -21,8 +21,7 @@
       })
 
       await navigator.credentials.store(cred)
-      show(`New public key credential generated: ${cred.id}`)
-      show(`private key: ${cred.password}`)
+      show(`New public key credential generated: ${cred.id} \n     private key: ${cred.password}`)
       console.log(cred.id)
     }
 
