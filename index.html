@@ -2,87 +2,87 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Credential Mangager Test</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.1/nacl.min.js"></script>
-    <script >
-        // import { sign } from "tweetnacl";
-        // import { decodeUTF8, encodeUTF8 } from "tweetnacl-util";
-        
-        // register collects the information provided in the form and saves it in the
-        // local credentials store.
-        const register = async () => {
-          const keys = generateKeys()
-          const user = {
-            email: document.getElementById('email').value.trim(),
-            password: document.getElementById('password').value,
-            publicKey: keys.publicKey,
-            privateKey: keys.privateKey
-          }
-        
-          // Persist access information in the local credentials store
-          const cred = new PasswordCredential({
-            id: user.email,
-            password: user.password,
-            publicKey: user.publicKey,
-            privateKey: user.privateKey
-          })
-        
-          await navigator.credentials.store(cred)
-          show(`Credentials stored for ${user.email}`)
-          show(`User's generated public key ${user.publicKey}`)
-          console.log(user.publicKey)
-        }
-        
-        
-        const login = async () => {
-          const cred = await navigator.credentials.get({password: true})
-          if (!cred) {
-            return show('No credentials in store.')
-          }
-          console.log(cred)
-          show(`You are now logged in as ${cred.id}.`)
-          show(`Your public key: ${cred.publicKey}`)
-        }
-        
-        
-        const show = (msg) => {
-          document.getElementById('welcome-text').innerHTML = msg
-        }
-        
-        
-        function generateKeys() {
-          return nacl.sign.keyPair()
-        }
-        
-        
-        function generateSignature(message, privateKey){
-          const bytes = decodeUTF8(message);
-          const signature = sign.detached(bytes, privateKey);
-          return signature
-        }
-        </script>
+  <meta charset="UTF-8">
+  <title>Credential Mangager Test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.1/nacl.min.js"></script>
+  <script src="nacl.min.js"></script>
+  <script src="nacl-util.min.js"></script>
+  <script>
+    // import { sign } from "tweetnacl";
+    // import { decodeUTF8, encodeUTF8 } from "tweetnacl-util";
+
+    // register collects the information provided in the form and saves it in the
+    // local credentials store.
+    const register = async () => {
+      const keys = generateKeys()
+      const user = {
+        publicKey: keys.publicKey,
+        privateKey: keys.privateKey,
+      }
+
+      // Persist access information in the local credentials store
+      const cred = new PasswordCredential({
+        id: nacl.util.encodeUTF8(user.publicKey),
+        password: nacl.util.encodeUTF8(user.privateKey),
+      })
+
+      await navigator.credentials.store(cred)
+      show(`Credentials stored for public key: ${user.publicKey}`)
+      console.log(user.publicKey)
+    }
+
+
+    const login = async () => {
+      const cred = await navigator.credentials.get({ password: true })
+      if (!cred) {
+        return show('No credentials in store.')
+      }
+      console.log(cred)
+      show(`You are now logged in as ${cred.id}.`)
+      show(`Your public key: ${cred.publicKey}`)
+    }
+
+
+    const show = (msg) => {
+      document.getElementById('welcome-text').innerHTML = msg
+    }
+
+
+    function generateKeys() {
+      return nacl.sign.keyPair()
+    }
+
+
+    function generateSignature(message, privateKey) {
+      const bytes = decodeUTF8(message);
+      const signature = sign.detached(bytes, privateKey);
+      return signature
+    }
+  </script>
 </head>
 
 <body>
-    <div id="welcome-text">Welcome.</div>
+  <div id="welcome-text">Welcome.</div>
 
-    <h1>Register</h1>
-    <form id="login-form" action="#" onsubmit="event.preventDefault(); register()">
-        Email:<br>
-        <input type="text" id="email" name="email">
-        <br>
-        Password:<br>
-        <input type="password" id="password" name="password">
-        <br><br>
-        <input type="submit" value="Sign up">
-    </form>
+  <h1>Register</h1>
+  <button onclick="register()">Sign up</button>
 
-    <h1>Login</h1>
-    <button onclick="login()">Login</button>
 
-    <h1>Logout</h1>
-    <button onclick="logout()">Logout</button>
+  <h1>Login</h1>
+
+
+  <form id="login-form" action="#" onsubmit="event.preventDefault(); login()">
+    Email:<br>
+    <input type="text" id="email" name="email">
+    <br>
+    Password:<br>
+    <input type="password" id="password" name="password">
+    <br><br>
+    <input type="submit" value="Log in">
+  </form>
+
+  <h1>Logout</h1>
+  <button onclick="logout()">Logout</button>
 </body>
 
 </html>
